@@ -10,18 +10,18 @@ const db = mysql.createConnection({
     user: 'root',
     host: 'localhost',
     password: 'cool8calm',
-    database:'employeesystem'
+    database:'shopnetorder'
 })
 
-app.post('/create', (req, res) => {
+app.post('/api/createOrder', (req, res) => {
     const name= req.body.name;
-    const age= req.body.age;
-    const country= req.body.country;
-    const position= req.body.position;
-    const wage= req.body.wage;
+    const address= req.body.address;
+    const product= req.body.product;
+    const quantity= req.body.quantity;
+    const price= req.body.price;
 
-    db.query('INSERT INTO employees (name, age, country, position, wage) VALUES (?, ?, ?, ?, ?)', 
-    [name, age, country, position, wage], (err, result ) => {
+    db.query('INSERT INTO orders (name, address, product, quantity, price) VALUES (?, ?, ?, ?, ?)', 
+    [name, address, product, quantity, price], (err, result ) => {
         if( err ){
             console.log( err );
         }
@@ -32,8 +32,8 @@ app.post('/create', (req, res) => {
     })
 })
 
-app.get("/employees", (req,res) => {
-    db.query("SELECT * FROM employees", (err, result ) => {
+app.get("/api/orders", (req,res) => {
+    db.query("SELECT * FROM orders", (err, result ) => {
         if( err ){
             console.log( err );
         }
@@ -42,6 +42,6 @@ app.get("/employees", (req,res) => {
         }
     })
 })
-app.listen(3003, () => {
-    console.log("yey, your server is running on port 3003");
+app.listen(3001, () => {
+    console.log("yey, your server is running on port 3001");
 })

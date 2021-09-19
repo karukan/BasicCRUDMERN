@@ -6,41 +6,42 @@ import axios from 'axios';
 function App() {
 
   const [ name, setName] = useState("");
-  const [ age, setAge] = useState(0);
-  const [ country, setCountry] = useState("");
-  const [ position, setPosition] = useState("");
-  const [ wage, setWage] = useState(0);
 
-  const [employeeList, setEmployeeList] = useState([]);
+  const [ address, setAddress] = useState("");
+  const [ product, setProduct] = useState("");
+  const [ price, setPrice] = useState(0);
+  const [ quantity, setQuantity] = useState(0);
+
+  const [orderList, setOrderList] = useState([]);
 
   const displayInfo = () => {
-    console.log( name + age + country + position + wage );
+    console.log( name + address + product + price + quantity );
   }
 
-  const addEmployee = () => {
-    Axios.post('http://localhost:3003/create', { 
+  const addOrder = () => {
+    Axios.post('http://localhost:3001/api/createOrder', { 
       name:name, 
-      age:age, 
-      country:country, 
-      position:position, 
-      wage:wage 
+      address:address, 
+      product:product, 
+      price:price,
+      quantity:quantity
     }).then(() => {
       // console.log( "success");
 
-      setEmployeeList([...employeeList, { 
+      setOrderList([...orderList, { 
         name:name, 
-        age:age, 
-        country:country, 
-        position:position, 
-        wage:wage 
+        address:address, 
+        product:product, 
+        price:price,
+        quantity:quantity
       }])
     })
   }
 
-  const getEmployees = () => {
-    Axios.get('http://localhost:3003/employees').then((response) => {
+  const getOrders = () => {
+    Axios.get('http://localhost:3001/orders').then((response) => {
       console.log(  response);
-      setEmployeeList(response.data);
+      setOrderList(response.data);
     })
   }
   return (
@@ -48,28 +49,30 @@ function App() {
       <div className="information">
         <label>Name</label>
         <input type="text" onChange={(event) => {setName(event.target.value)}}/>
-        <label>Age</label>
-        <input type="number" onChange={(event) => {setAge(event.target.value)}}/>
-        <label>Country</label>
-        <input type="text" onChange={(event) => {setCountry(event.target.value)}}/>
-        <label>Position</label>
-        <input type="text" onChange={(event) => {setPosition(event.target.value)}}/>
-        <label>Wage ( year )</label>
-        <input type="number" onChange={(event) => {setWage(event.target.value)}}/>
-        <button onClick={addEmployee}>Add employee</button>
+        <label>Mailing Address</label>
+        <input type="text" onChange={(event) => {setAddress(event.target.value)}}/>
+      
+       
+        <label>Product</label>
+        <input type="text" onChange={(event) => {setProduct(event.target.value)}}/>
+        <label>Quantity</label>
+        <input type="number" onChange={(event) => {setQuantity(event.target.value)}}/>
+        <label>Price</label>
+        <input type="number" onChange={(event) => {setPrice(event.target.value)}}/>
+        <button onClick={addOrder}>Add Order</button>
       </div>
 
-      <div className="employees">
+      <div className="orders">
 
-      <button onClick={getEmployees}>Show Employees</button>
+      <button onClick={getOrders}>Show Orders</button>
       {
-        employeeList.map((val, key) => {
-          return <div className="employee">
+        orderList.map((val, key) => {
+          return <div className="order">
             <h3>Name : {val.name}</h3>
-            <h3>Age : {val.age}</h3>
-            <h3>Country : {val.country}</h3>
-            <h3>Position: {val.position}</h3>
-            <h3>Wage: {val.wage}</h3>
+            <h3>Address : {val.address}</h3>
+            <h3>Product: {val.product}</h3>
+            <h3>Quantity: {val.quantity}</h3>
+            <h3>Price : {val.price}</h3>
             </div>
         })
       }

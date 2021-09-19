@@ -29,7 +29,7 @@
  cursor: pointer;
 }
 
-.employees {
+.orders {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,7 +37,7 @@
   background-color: aqua;
 }
 
-.employee {
+.order {
   width:700px;
   height: 60px;
   background-color: lightcyan;
